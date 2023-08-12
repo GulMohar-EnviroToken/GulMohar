@@ -20,16 +20,36 @@ import { categories } from '../navbar/Categories';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
 import Heading from '../Heading';
+import DateSelector from '../inputs/DateSelector';
+import { Calendar } from 'react-date-range';
+import Button from '../Button';
+import DatePicker from '../inputs/Calendar';
 
 enum STEPS {
   CATEGORY = 0,
   LOCATION = 1,
-  IMAGES = 2,
-  DESCRIPTION = 3,
-  PRICE = 4,
+  DATE = 2,
+  IMAGES = 3,
+  DESCRIPTION = 4,
+  PRICE = 5,
 }
 
-const RentModal = () => {
+interface RentModalProps {
+  dateRange: Range
+  onChangeDate: (value: Range) => void;
+  onSubmit: () => void;
+  disabled?: boolean;
+  disabledDates: Date[];
+}
+
+const RentModal: React.FC<
+RentModalProps
+> = ({
+dateRange,
+onChangeDate,
+disabled,
+disabledDates
+}) => {
   const router = useRouter();
   const rentModal = useRentModal();
 
@@ -51,6 +71,7 @@ const RentModal = () => {
       location: null,
       imageSrc: '',
       price: 1,
+      date:'',
       title: '',
       description: '',
     }
@@ -212,6 +233,30 @@ const RentModal = () => {
     )
   }
 
+  if (step === STEPS.DATE) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Select the date for your Event"
+          subtitle="Show volunteers when your Event is taking place!"
+        />
+        <Calendar
+        value={dateRange}
+        disabledDates={disabledDates}
+        onChange={(value) => 
+          onChangeDate(value.selection)}
+      />
+      <hr />
+      <div className="p-4">
+        <Button 
+          disabled={disabled} 
+          label="Reserve" 
+          onClick={onSubmit}
+        />
+        </div>
+      </div>
+    );
+  }
   if (step === STEPS.PRICE) {
     bodyContent = (
       <div className="flex flex-col gap-8">
