@@ -58,7 +58,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
         transition
         cursor-pointer
         ${selected ? 'border-b-neutral-800' : 'border-transparent'}
-        ${selected ? 'text-orange-800' : 'text-orange-500'}
+        ${selected ? 'text-white' : 'text-white'}
       `}
     >
       <Icon size={26} />

@@ -83,6 +83,7 @@ const Categories = () => {
           items-center 
           justify-between
           overflow-x-auto
+          bg-rose-300
         "
       >
         {categories.map((item) => (
